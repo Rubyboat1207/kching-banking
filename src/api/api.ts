@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'http://titanschedule:5000';
 
 function apiFetch(path: string, group_name: string | null, password: string | null, extra_body: any={}) {
     return fetch(API_BASE_URL + path, {
