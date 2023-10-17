@@ -35,8 +35,6 @@ function Account() {
         if(confirm(`Do you want to transfer \$${amount} to ${recipient}? This confirmation will only appear once.`)) {
             sendMoney(recipient, parseInt(amount)).then(resetData)
         }
-
-
     }
 
     return (

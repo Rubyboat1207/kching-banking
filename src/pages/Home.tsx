@@ -13,7 +13,7 @@ function Home() {
             if(wasSuccessful) {
                 window.sessionStorage.setItem('group_name', username);
                 window.sessionStorage.setItem('password', password);
-                naviagate('/account')
+                naviagate('/kching-bank/account')
             }
         })
     }
