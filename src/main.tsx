@@ -7,11 +7,11 @@ import Account from './pages/Account';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/kching-bank",
     element: <Home />,
   },
   {
-    path: "/account",
+    path: "/kching-bank/account",
     element: <Account />,
   },
 ]);
