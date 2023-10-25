@@ -21,11 +21,22 @@ function Account() {
   useEffect(resetData, []);
 
   function resetData() {
+    if(window.sessionStorage.getItem("password") == null || window.sessionStorage.getItem("password") == ""){
+      logOut();
+      alert("Your account is invalid. Please log-in again");
+      return;
+    }
+
     getGroupInfo().then((data) => {
       setTableData(data.records);
       setBalance("$" + data.account_balance);
       setProcessing(false);
     });
+  }
+
+  function logOut() {
+    window.sessionStorage.clear();
+    naviagate("/login");
   }
 
   function beginTransfer() {
