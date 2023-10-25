@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { tryLogin } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import Advertisment from "../components/Advertisement";
 
 function Home() {
     const [password, setPassword] = useState('')
@@ -20,26 +21,33 @@ function Home() {
 
 
     return (
-        <div>
-            <div>
-                <label htmlFor="username">Group Name</label>
+        <div className="containlarge">
+            <Advertisment layout="vert"/>
+            <div className="containall">
                 <div>
-                    <input type="email" name="username" placeholder="your group name" value={username} onChange={e => setUsername(e.target.value)} />
+                    <label htmlFor="username">Group Name</label>
+                    <div>
+                        <input type="email" name="username" placeholder="your group name" value={username} onChange={e => setUsername(e.target.value)} />
+                    </div>
                 </div>
-            </div>
-            <div>
-                <label htmlFor="password">Password</label>
                 <div>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="············"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
+                    <label htmlFor="password">Password</label>
+                    <div>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="············"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                    </div>
                 </div>
+                <div style={{marginTop: 15}}></div>
+                <button onClick={login}>Login</button>
+                <div style={{marginTop: 60}}></div>
+                <Advertisment layout="horiz" />
             </div>
-            <button onClick={login}>Login</button>
+            <Advertisment layout="vert"/>
         </div>
     )
 }

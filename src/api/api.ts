@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://titanschedule.com:5000';
+const API_BASE_URL = 'http://localhost:5001';
 
 function apiFetch(path: string, group_name: string | null, password: string | null, extra_body: any={}) {
     return fetch(API_BASE_URL + path, {
@@ -38,10 +38,11 @@ export async function tryLogin(group_name:string, password: string): Promise<boo
     return json.success;
 }
 
-export async function sendMoney(recipient: string, transfer_amount: number): Promise<boolean> {
+export async function sendMoney(recipient: string, transfer_amount: number, custom_message: string=''): Promise<boolean> {
     const json = await apiFetch('/group/transfer', window.sessionStorage.getItem('group_name'), window.sessionStorage.getItem('password'), {
         to_group_name: recipient,
-        transfer_amount
+        transfer_amount,
+        message: custom_message
     }).then(res => res.json().then(json => {
         return json;
     }))
