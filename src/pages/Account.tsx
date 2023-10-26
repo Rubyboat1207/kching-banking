@@ -54,7 +54,7 @@ function Account() {
         `Do you want to transfer \$${amount} to ${recipient}? This confirmation will only appear once.`
       )
     ) {
-      sendMoney(recipient, parseInt(amount), message).then(resetData);
+      sendMoney(recipient, parseFloat(amount), message).then(resetData);
     }
   }
 
