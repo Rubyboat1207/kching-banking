@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getGroupInfo, sendMoney } from "../api/api";
 import moment from "moment-timezone";
 import Advertisment from "../components/Advertisement";
+import { useNavigate } from "react-router-dom";
 
 function isNumber(numStr: string) {
   return !isNaN(parseFloat(numStr)) && !isNaN(+numStr);
@@ -17,6 +18,7 @@ function Account() {
   const [message, setMessage] = useState("");
 
   const isAdmin = sessionStorage.getItem("group_name") == "jameswright";
+  const naviagate = useNavigate()
 
   useEffect(resetData, []);
 

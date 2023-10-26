@@ -1,7 +1,13 @@
 const API_BASE_URL = 'https://titanschedule.com:5000';
+const LOCAL_API_URL = 'http://localhost:5001';
+const useLocal = false;
+
+function getURL() {
+    return useLocal ? LOCAL_API_URL : API_BASE_URL;
+}
 
 function apiFetch(path: string, group_name: string | null, password: string | null, extra_body: any={}) {
-    return fetch(API_BASE_URL + path, {
+    return fetch(getURL() + path, {
         method: 'POST',
         body: JSON.stringify(Object.assign({
             group_name,
