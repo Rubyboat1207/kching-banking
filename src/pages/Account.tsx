@@ -5,7 +5,7 @@ import Advertisment from "../components/Advertisement";
 import { useNavigate } from "react-router-dom";
 import ReplayIcon from "@mui/icons-material/Replay";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import {
   ThemeProvider,
   createTheme,
@@ -80,7 +80,12 @@ function Account() {
         `Do you want to transfer \$${amount} to ${recipient}? This confirmation will only appear once.`
       )
     ) {
-      sendMoney(recipient, parseFloat(num), message).then(resetData);
+      sendMoney(recipient, parseFloat(num), message).then(resetData).catch(() => {
+        alert(
+          "The request did not successfully go through. Please try again, the api may be overwhelmed."
+        );
+        resetData();
+      })
     }
   }
 
@@ -166,18 +171,18 @@ function Account() {
           </Typography>
           <Divider sx={{ mb: 3 }} />
           <Button
-              variant="contained"
-              onClick={() => {
-                resetData();
-                setBalance(null);
-                setTableData([]);
-              }}
-              disabled={processing}
-              startIcon={<ReplayIcon />}
-              sx={{ mb: 2 }}
-            >
-              Reload
-            </Button>
+            variant="contained"
+            onClick={() => {
+              resetData();
+              setBalance(null);
+              setTableData([]);
+            }}
+            disabled={processing}
+            startIcon={<ReplayIcon />}
+            sx={{ mb: 2 }}
+          >
+            Reload
+          </Button>
           <TableContainer component={Paper}>
             <Table aria-label="transaction table">
               <TableHead>
