@@ -25,11 +25,22 @@ function Home() {
   const login = async () => {
     const wasSuccessful = await tryLogin(username, password);
     if (wasSuccessful) {
-      window.sessionStorage.setItem("group_name", username);
-      window.sessionStorage.setItem("password", password);
+      window.localStorage.setItem("group_name", username);
+      window.localStorage.setItem("password", password);
       navigate("/kching-bank/account");
     }
   };
+
+  const gn = window.localStorage.getItem('group_name');
+  const pw = window.localStorage.getItem('password');
+  
+  if(gn && pw) {
+    tryLogin(gn, pw).then(data => {
+        if(data) {
+            navigate("/kching-bank/account");
+        }
+    })
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -44,6 +55,17 @@ function Home() {
         }}
       >
         <Advertisement layout="vert" />
+        <div>
+            {gn && pw &&
+            <Paper
+                elevation={3}
+                sx={{ width: "auto", maxWidth: "400px", m: "auto", p: 3, mb: 5, border: 2, borderColor: 'divider' }}
+            >
+                <Typography>
+                    You are still logged in, checking password...
+                </Typography>
+            </Paper>
+            }
         <Paper
           elevation={3}
           sx={{ width: "auto", maxWidth: "400px", m: "auto", p: 3 }}
@@ -80,6 +102,7 @@ function Home() {
             </Button>
           </Box>
         </Paper>
+        </div>
         <Advertisement layout="horiz" />
       </Container>
     </ThemeProvider>

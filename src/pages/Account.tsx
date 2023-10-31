@@ -38,7 +38,7 @@ function Account() {
   const [message, setMessage] = useState("");
 
   const isAdmin = ["jameswright", "facilitatorsofkching", "gilliam"].includes(
-    sessionStorage.getItem("group_name") || ""
+    localStorage.getItem("group_name") || ""
   );
   const naviagate = useNavigate();
 
@@ -46,8 +46,8 @@ function Account() {
 
   function resetData() {
     if (
-      window.sessionStorage.getItem("password") == null ||
-      window.sessionStorage.getItem("password") == ""
+      !window.localStorage.getItem("group_name") ||
+      !window.localStorage.getItem("password")
     ) {
       logOut();
       alert("Your account is invalid. Please log-in again");
@@ -62,7 +62,7 @@ function Account() {
   }
 
   function logOut() {
-    window.sessionStorage.clear();
+    window.localStorage.clear();
     naviagate("/kching-bank/");
   }
 
@@ -109,7 +109,7 @@ function Account() {
             </Typography>
             <Divider sx={{ mb: 3 }} />
             <Typography variant="h4" sx={{ mb: 2 }}>
-              {sessionStorage.getItem("group_name")}
+              {localStorage.getItem("group_name")}
             </Typography>
             <Typography variant="h6" sx={{ mb: 2 }}>
               Your Current balance is: {balance || "loading"}

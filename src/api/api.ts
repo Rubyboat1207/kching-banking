@@ -21,7 +21,7 @@ function apiFetch(path: string, group_name: string | null, password: string | nu
 
 
 export async function getGroupInfo() {
-    const json = await apiFetch('/group/login', window.sessionStorage.getItem('group_name'), window.sessionStorage.getItem('password')).then(res => res.json().then(json => {
+    const json = await apiFetch('/group/login', window.localStorage.getItem('group_name'), window.localStorage.getItem('password')).then(res => res.json().then(json => {
         return json;
     }))
 
@@ -45,7 +45,7 @@ export async function tryLogin(group_name:string, password: string): Promise<boo
 }
 
 export async function sendMoney(recipient: string, transfer_amount: number, custom_message: string=''): Promise<boolean> {
-    const json = await apiFetch('/group/transfer', window.sessionStorage.getItem('group_name'), window.sessionStorage.getItem('password'), {
+    const json = await apiFetch('/group/transfer', window.localStorage.getItem('group_name'), window.localStorage.getItem('password'), {
         to_group_name: recipient,
         transfer_amount,
         message: custom_message

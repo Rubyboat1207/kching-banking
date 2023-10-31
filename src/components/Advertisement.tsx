@@ -27,7 +27,7 @@ function Advertisment({ layout,  }: { layout: "horiz" | "vert" }) {
     return;
   }
 
-  if(sessionStorage.getItem('group_name') == 'jameswright') {
+  if(localStorage.getItem('group_name') == 'jameswright') {
     return;
   }
 
