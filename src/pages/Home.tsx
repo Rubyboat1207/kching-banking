@@ -47,7 +47,7 @@ function Home() {
       <Container
         sx={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "space-around",
           alignItems: "center",
           bgcolor: "background.default",
           color: "text.primary",
@@ -103,7 +103,7 @@ function Home() {
           </Box>
         </Paper>
         </div>
-        <Advertisement layout="horiz" />
+        <Advertisement layout="vert" />
       </Container>
     </ThemeProvider>
   );

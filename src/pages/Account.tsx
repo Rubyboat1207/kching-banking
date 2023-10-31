@@ -98,7 +98,7 @@ function Account() {
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="md" sx={{ py: 4 }}>
-        <Advertisment layout="vert" />
+        {/* <Advertisment layout="vert" /> */}
         <Paper sx={{ p: 3, my: 2 }}>
           <Paper
             elevation={3}
@@ -214,7 +214,7 @@ function Account() {
             </Table>
           </TableContainer>
         </Paper>
-        <Advertisment layout="vert" />
+        {/* <Advertisment layout="vert" /> */}
       </Container>
     </ThemeProvider>
   );
