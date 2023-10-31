@@ -5,6 +5,7 @@ import Advertisment from "../components/Advertisement";
 import { useNavigate } from "react-router-dom";
 import ReplayIcon from "@mui/icons-material/Replay";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import LogoutIcon from '@mui/icons-material/Logout';
 import {
   ThemeProvider,
   createTheme,
@@ -62,7 +63,7 @@ function Account() {
 
   function logOut() {
     window.sessionStorage.clear();
-    naviagate("/login");
+    naviagate("/kching-bank/");
   }
 
   function beginTransfer() {
@@ -108,6 +109,14 @@ function Account() {
             <Typography variant="h6" sx={{ mb: 2 }}>
               Your Current balance is: {balance || "loading"}
             </Typography>
+            <Button
+              variant="contained"
+              onClick={logOut}
+              startIcon={<LogoutIcon />}
+              sx={{ mb: 2 }}
+            >
+              Log Out
+            </Button>
           </Paper>
           <Paper
             elevation={3}
@@ -156,6 +165,19 @@ function Account() {
             Account History
           </Typography>
           <Divider sx={{ mb: 3 }} />
+          <Button
+              variant="contained"
+              onClick={() => {
+                resetData();
+                setBalance(null);
+                setTableData([]);
+              }}
+              disabled={processing}
+              startIcon={<ReplayIcon />}
+              sx={{ mb: 2 }}
+            >
+              Reload
+            </Button>
           <TableContainer component={Paper}>
             <Table aria-label="transaction table">
               <TableHead>
