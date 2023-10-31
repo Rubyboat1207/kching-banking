@@ -1,55 +1,88 @@
 import { useState } from "react";
-import { tryLogin } from "../api/api";
 import { useNavigate } from "react-router-dom";
-import Advertisment from "../components/Advertisement";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import Advertisement from "../components/Advertisement";
+import { tryLogin } from "../api/api";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Paper, Typography } from "@mui/material";
 
 function Home() {
-    const [password, setPassword] = useState('')
-    const [username, setUsername] = useState('')
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
-    const naviagate = useNavigate()
+  const navigate = useNavigate();
 
-    function login() {
-        tryLogin(username, password).then(wasSuccessful => {
-            if(wasSuccessful) {
-                window.sessionStorage.setItem('group_name', username);
-                window.sessionStorage.setItem('password', password);
-                naviagate('/kching-bank/account')
-            }
-        })
+  const theme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
+  const login = async () => {
+    const wasSuccessful = await tryLogin(username, password);
+    if (wasSuccessful) {
+      window.sessionStorage.setItem("group_name", username);
+      window.sessionStorage.setItem("password", password);
+      navigate("/kching-bank/account");
     }
+  };
 
-
-    return (
-        <div className="containlarge">
-            <Advertisment layout="vert"/>
-            <div className="containall">
-                <div>
-                    <label htmlFor="username">Group Name</label>
-                    <div>
-                        <input type="email" name="username" placeholder="your group name" value={username} onChange={e => setUsername(e.target.value)} />
-                    </div>
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <div>
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="············"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div style={{marginTop: 15}}></div>
-                <button onClick={login}>Login</button>
-                <div style={{marginTop: 60}}></div>
-                <Advertisment layout="horiz" />
-            </div>
-            <Advertisment layout="vert"/>
-        </div>
-    )
+  return (
+    <ThemeProvider theme={theme}>
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          bgcolor: "background.default",
+          color: "text.primary",
+          height: '100vh'
+        }}
+      >
+        <Advertisement layout="vert" />
+        <Paper
+          elevation={3}
+          sx={{ width: "auto", maxWidth: "400px", m: "auto", p: 3 }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <Typography>Log In</Typography>
+            <TextField
+              label="Group Name"
+              variant="outlined"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              margin="normal"
+              fullWidth
+            />
+            <TextField
+              label="Password"
+              type="password"
+              variant="outlined"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              margin="normal"
+              fullWidth
+            />
+            <Button variant="contained" onClick={login} sx={{ mt: 2 }}>
+              Login
+            </Button>
+          </Box>
+        </Paper>
+        <Advertisement layout="horiz" />
+      </Container>
+    </ThemeProvider>
+  );
 }
 
 export default Home;

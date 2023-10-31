@@ -3,6 +3,25 @@ import { getGroupInfo, sendMoney } from "../api/api";
 import moment from "moment-timezone";
 import Advertisment from "../components/Advertisement";
 import { useNavigate } from "react-router-dom";
+import ReplayIcon from "@mui/icons-material/Replay";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import {
+  ThemeProvider,
+  createTheme,
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Box,
+  Divider,
+} from "@mui/material";
 
 function isNumber(numStr: string) {
   return !isNaN(parseFloat(numStr)) && !isNaN(+numStr);
@@ -17,13 +36,18 @@ function Account() {
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
 
-  const isAdmin = sessionStorage.getItem("group_name") == "jameswright";
-  const naviagate = useNavigate()
+  const isAdmin = ["jameswright", "facilitatorsofkching", "gilliam"].includes(
+    sessionStorage.getItem("group_name") || ""
+  );
+  const naviagate = useNavigate();
 
   useEffect(resetData, []);
 
   function resetData() {
-    if(window.sessionStorage.getItem("password") == null || window.sessionStorage.getItem("password") == ""){
+    if (
+      window.sessionStorage.getItem("password") == null ||
+      window.sessionStorage.getItem("password") == ""
+    ) {
       logOut();
       alert("Your account is invalid. Please log-in again");
       return;
@@ -43,7 +67,7 @@ function Account() {
 
   function beginTransfer() {
     setProcessing(true);
-    const num = amount.replace('$', '');
+    const num = amount.replace("$", "");
     if (!isNumber(num)) {
       alert("amount must be a number. No symbols allowed.");
       setProcessing(false);
@@ -59,93 +83,113 @@ function Account() {
     }
   }
 
+  const theme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
   return (
-    <>
-      <div className="containlarge">
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="md" sx={{ py: 4 }}>
         <Advertisment layout="vert" />
-        <div style={{ marginLeft: 125 }}></div>
-        <div>
-          <div>
-            <h1 id="acct_name">
-              {window.sessionStorage.getItem("group_name")}
-            </h1>
-          </div>
-          <div>
-            <h2 id="balance">
-              Your Current balance is:{" "}
-              {balance || "loading"}{" "}
-            </h2>
-          </div>
-          <div>
-            <label htmlFor="group_send">Recipient Entity</label>
-            <div>
-              <input
-                type="text"
-                name="group_send"
-                placeholder="group1"
+        <Paper sx={{ p: 3, my: 2 }}>
+          <Paper
+            elevation={3}
+            sx={{ my: 2, p: 3, border: 2, borderColor: "divider" }}
+          >
+            <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+              Account Info
+            </Typography>
+            <Divider sx={{ mb: 3 }} />
+            <Typography variant="h4" sx={{ mb: 2 }}>
+              {sessionStorage.getItem("group_name")}
+            </Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Your Current balance is: {balance || "loading"}
+            </Typography>
+          </Paper>
+          <Paper
+            elevation={3}
+            sx={{ my: 2, p: 3, border: 2, borderColor: "divider", mt: 5 }}
+          >
+            <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+              Transfer Money
+            </Typography>
+            <Divider sx={{ mb: 3 }} />
+            <Box sx={{ "& > :not(style)": { m: 1 }, mb: 3 }}>
+              <TextField
+                label="Recipient Entity"
+                variant="outlined"
                 onChange={(e) => setRecipient(e.target.value)}
                 value={recipient}
+                fullWidth
               />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="amount">Amount Sending</label>
-            <div>
-              <input
-                type="amount"
-                name="amount"
-                placeholder="500"
+              <TextField
+                label="Transfer Amount"
+                variant="outlined"
                 onChange={(e) => setAmount(e.target.value)}
                 value={amount}
+                fullWidth
               />
-            </div>
-          </div>
-          {isAdmin && (
-            <div>
-              <label htmlFor="message">Transaction Message / Label</label>
-              <div>
-                <input
-                  type="text"
-                  name="message"
-                  placeholder="taxes"
+              {isAdmin && (
+                <TextField
+                  label="Transaction Message / Label"
+                  variant="outlined"
                   onChange={(e) => setMessage(e.target.value)}
                   value={message}
+                  fullWidth
                 />
-              </div>
-            </div>
-          )}
-          <button onClick={beginTransfer} disabled={processing}>
-            Transfer Money
-          </button>
-          <div>
-            <table id="table">
-              <tr>
-                <th>Action</th>
-                <th>Difference</th>
-                <th style={{width: 100}}>Balance after</th>
-                <th>Timestamp</th>
-                <th>Message</th>
-              </tr>
-              {tableData.map((d) => (
-                <tr>
-                  <td>{d.action}</td>
-                  <td>{d.difference}</td>
-                  <td>{d.initial_balance}</td>
-                  <td className="timestamp">
-                    {moment(parseInt(d.timestamp) * 1000).format(
-                      "DD/MM/YYYY hh:mm:ss a"
-                    )}
-                  </td>
-                  <td>{d.message}</td>
-                </tr>
-              ))}
-            </table>
-          </div>
-        </div>
-        <div style={{ marginLeft: 125 }}></div>
+              )}
+            </Box>
+            <Button
+              variant="contained"
+              onClick={beginTransfer}
+              disabled={processing}
+              startIcon={<AttachMoneyIcon />}
+              sx={{ mb: 2 }}
+            >
+              Transfer Money
+            </Button>
+          </Paper>
+          <Typography variant="h5" component="h2" sx={{ mb: 2, mt: 5 }}>
+            Account History
+          </Typography>
+          <Divider sx={{ mb: 3 }} />
+          <TableContainer component={Paper}>
+            <Table aria-label="transaction table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Action</TableCell>
+                  <TableCell>Difference</TableCell>
+                  <TableCell>Balance after</TableCell>
+                  <TableCell>Timestamp</TableCell>
+                  <TableCell>Message</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tableData
+                  .sort((a, b) => parseInt(b.timestamp) - parseInt(a.timestamp))
+                  .map((d) => (
+                    <TableRow key={d.id}>
+                      <TableCell>{d.action}</TableCell>
+                      <TableCell>{d.difference}</TableCell>
+                      <TableCell>{d.initial_balance}</TableCell>
+                      <TableCell>
+                        {moment(parseInt(d.timestamp) * 1000).format(
+                          "DD/MM/YYYY hh:mm:ss a"
+                        )}
+                      </TableCell>
+                      <TableCell>{d.message}</TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
         <Advertisment layout="vert" />
-      </div>
-    </>
+      </Container>
+    </ThemeProvider>
   );
 }
 
