@@ -43,8 +43,9 @@ function Account() {
 
   function beginTransfer() {
     setProcessing(true);
-    if (!isNumber(amount)) {
-      alert("amount must be a number.");
+    const num = amount.replace('$', '');
+    if (!isNumber(num)) {
+      alert("amount must be a number. No symbols allowed.");
       setProcessing(false);
       return;
     }
@@ -54,7 +55,7 @@ function Account() {
         `Do you want to transfer \$${amount} to ${recipient}? This confirmation will only appear once.`
       )
     ) {
-      sendMoney(recipient, parseFloat(amount), message).then(resetData);
+      sendMoney(recipient, parseFloat(num), message).then(resetData);
     }
   }
 
@@ -81,7 +82,7 @@ function Account() {
               <input
                 type="text"
                 name="group_send"
-                placeholder="group 1"
+                placeholder="group1"
                 onChange={(e) => setRecipient(e.target.value)}
                 value={recipient}
               />
@@ -93,7 +94,7 @@ function Account() {
               <input
                 type="amount"
                 name="amount"
-                placeholder="$500"
+                placeholder="500"
                 onChange={(e) => setAmount(e.target.value)}
                 value={amount}
               />
