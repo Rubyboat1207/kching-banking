@@ -8,6 +8,7 @@ import Advertisement from "../components/Advertisement";
 import { tryLogin } from "../api/api";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Paper, Typography } from "@mui/material";
+import LoginIcon from '@mui/icons-material/Login';
 
 function Home() {
   const [password, setPassword] = useState("");
@@ -74,7 +75,7 @@ function Home() {
               margin="normal"
               fullWidth
             />
-            <Button variant="contained" onClick={login} sx={{ mt: 2 }}>
+            <Button variant="contained" onClick={login} sx={{ mt: 2 }} startIcon={<LoginIcon/>}>
               Login
             </Button>
           </Box>
