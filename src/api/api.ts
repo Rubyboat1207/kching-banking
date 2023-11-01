@@ -49,7 +49,7 @@ export async function sendMoney(recipient: string, transfer_amount: number, cust
         to_group_name: recipient,
         transfer_amount,
         message: custom_message,
-        reduce_capital: !useBal
+        reduce_capital: useBal
     }).then(res => res.json().then(json => {
         return json;
     }))
