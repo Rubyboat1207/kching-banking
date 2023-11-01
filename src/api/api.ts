@@ -44,11 +44,12 @@ export async function tryLogin(group_name:string, password: string): Promise<boo
     return json.success;
 }
 
-export async function sendMoney(recipient: string, transfer_amount: number, custom_message: string=''): Promise<boolean> {
+export async function sendMoney(recipient: string, transfer_amount: number, custom_message: string='', useBal: boolean=true): Promise<boolean> {
     const json = await apiFetch('/group/transfer', window.localStorage.getItem('group_name'), window.localStorage.getItem('password'), {
         to_group_name: recipient,
         transfer_amount,
-        message: custom_message
+        message: custom_message,
+        reduce_capital: !useBal
     }).then(res => res.json().then(json => {
         return json;
     }))

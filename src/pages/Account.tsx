@@ -22,6 +22,8 @@ import {
   Paper,
   Box,
   Divider,
+  ToggleButton,
+  Switch,
 } from "@mui/material";
 
 function isNumber(numStr: string) {
@@ -36,8 +38,13 @@ function Account() {
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
+  const [shouldUseBalance, setShoulduseBalance] = useState(false);
 
   const isAdmin = ["jameswright", "facilitatorsofkching", "gilliam"].includes(
+    localStorage.getItem("group_name") || ""
+  );
+
+  const hasInfinite = ["jameswright"].includes(
     localStorage.getItem("group_name") || ""
   );
   const naviagate = useNavigate();
@@ -80,7 +87,7 @@ function Account() {
         `Do you want to transfer \$${amount} to ${recipient}? This confirmation will only appear once.`
       )
     ) {
-      sendMoney(recipient, parseFloat(num), message).then(resetData).catch(() => {
+      sendMoney(recipient, parseFloat(num), message, shouldUseBalance).then(resetData).catch(() => {
         alert(
           "The request did not successfully go through. Please try again, the api may be overwhelmed."
         );
@@ -155,6 +162,17 @@ function Account() {
                   fullWidth
                 />
               )}
+              {hasInfinite && (
+                <>
+                  <Typography component="p" display='inline'>Should Reduce Balance</Typography>
+                  <Switch
+                    onChange={() => {setShoulduseBalance(!shouldUseBalance)}}
+                    value={true}
+                  />
+                </>
+              )}
+
+
             </Box>
             <Button
               variant="contained"
