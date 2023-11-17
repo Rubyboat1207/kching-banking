@@ -139,6 +139,7 @@ function Services() {
                 required
                 fullWidth
               />
+              <Typography>$40 per box</Typography>
 
               <Button
                 variant="contained"
