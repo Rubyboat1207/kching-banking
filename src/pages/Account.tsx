@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getGroupInfo, sendMoney } from "../api/api";
 import moment from "moment-timezone";
-import Advertisment from "../components/Advertisement";
+import ConstructionIcon from '@mui/icons-material/Construction';
 import { useNavigate } from "react-router-dom";
 import ReplayIcon from "@mui/icons-material/Replay";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -182,6 +182,27 @@ function Account() {
               sx={{ mb: 2 }}
             >
               Transfer Money
+            </Button>
+          </Paper>
+          <Paper
+            elevation={3}
+            sx={{ my: 2, p: 3, border: 2, borderColor: "divider", mt: 5 }}
+          >
+            <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+              Services
+            </Typography>
+            <Divider sx={{ mb: 3 }} />
+            <Box sx={{ "& > :not(style)": { m: 1 }, mb: 3 }}>
+              <Typography>Travel to the services page to see what services are endorsed by the banking system</Typography>
+            </Box>
+            <Button
+              variant="contained"
+              onClick={() => naviagate("/kching-bank/services")}
+              disabled={processing}
+              startIcon={<ConstructionIcon />}
+              sx={{ mb: 2 }}
+            >
+              View Services
             </Button>
           </Paper>
           <Typography variant="h5" component="h2" sx={{ mb: 2, mt: 5 }}>

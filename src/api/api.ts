@@ -1,6 +1,6 @@
 const API_BASE_URL = 'https://titanschedule.com:5000';
 const LOCAL_API_URL = 'http://localhost:5001';
-const useLocal = false;
+const useLocal = true;
 
 function getURL() {
     return useLocal ? LOCAL_API_URL : API_BASE_URL;
@@ -50,6 +50,21 @@ export async function sendMoney(recipient: string, transfer_amount: number, cust
         transfer_amount,
         message: custom_message,
         reduce_capital: useBal
+    }).then(res => res.json().then(json => {
+        return json;
+    }))
+
+    if(!json.success) {
+        alert(json.message);
+    }
+
+    return json.success;
+}
+
+export async function requestBox(boxes_amount: number, booth_number: string) {
+    const json = await apiFetch('/services/requestBox', window.localStorage.getItem('group_name'), window.localStorage.getItem('password'), {
+        boxes_amount,
+        booth_number
     }).then(res => res.json().then(json => {
         return json;
     }))

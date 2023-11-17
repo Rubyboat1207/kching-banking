@@ -4,6 +4,7 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Home from './pages/Home';
 import Account from './pages/Account';
+import Services from './pages/Services';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
     path: "/kching-bank/account",
     element: <Account />,
   },
+  {
+    path: '/kching-bank/services',
+    element: <Services />
+  }
 ]);
 
 
