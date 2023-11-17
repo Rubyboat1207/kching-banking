@@ -1,6 +1,6 @@
 const API_BASE_URL = 'https://titanschedule.com:5000';
 const LOCAL_API_URL = 'http://localhost:5001';
-const useLocal = true;
+const useLocal = false;
 
 function getURL() {
     return useLocal ? LOCAL_API_URL : API_BASE_URL;
