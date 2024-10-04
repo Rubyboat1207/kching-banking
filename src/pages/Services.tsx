@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getGroupInfo, requestBox, sendMoney } from "../api/api";
+import { getGroupInfo, requestBox } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import InventoryIcon from '@mui/icons-material/Inventory';
@@ -67,7 +67,7 @@ function Services() {
 
     requestBox(parseInt(num), boothSpace).then(() => {
       setProcessing(false);
-    }).catch(e => {
+    }).catch(() => {
       setProcessing(false);
       alert('There was an unexpected error. Sorry')
     });
